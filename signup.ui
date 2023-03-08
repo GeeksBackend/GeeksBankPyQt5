@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>SignUp</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>801</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>Geeks Bank Регистрация</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="login">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>220</y>
+     <width>341</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="placeholderText">
+    <string>Логин</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="password">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>290</y>
+     <width>341</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="placeholderText">
+    <string>Пароль</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="email">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>360</y>
+     <width>341</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="placeholderText">
+    <string>Почта</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="signup">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>440</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;Yu Gothic UI Semibold&quot;;
+color: red;
+background-color: white;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>Регистрация</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="error">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>160</y>
+     <width>341</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;Yu Gothic UI Semibold&quot;;
+color: red;
+background-color: white;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>Неправильные данные</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
