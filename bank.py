@@ -62,17 +62,49 @@ class Personal(QWidget):
         result = cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         self.balance.setText(f"{result.fetchall()[0][0]} KGS")
         self.make.clicked.connect(self.make_money)
+        # self.hide_transfer()
+        # self.transfer.clicked.connect(self.user_transfer)
+        # self.send.clicked.connect(self.user_transfer)
+        cursor.connection.commit()
+
+    # def hide_transfer(self):
+    #     self.result.hide()
+    #     self.login.hide()
+    #     self.amount.hide()
+    #     self.send.hide()
+
+    # def show_transfer(self):
+    #     self.result.show()
+    #     self.login.show()
+    #     self.amount.show()
+    #     self.send.show()
 
     def update_balance(self):
         cursor = self.db.connect.cursor()
-        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
-        self.balance.setText(f"{result.fetchall()[0][0]} KGS")
+        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';").fetchall()
+        # self.balance.setText(f"{result.fetchall()[0][0]} KGS")
+        print(result)
     
     def make_money(self):
         cursor = self.db.connect.cursor()
         cursor.execute(f"UPDATE users SET balance = balance + {10} WHERE login = '{self.login}';")
         self.db.connect.commit()
         self.update_balance()
+
+    # def user_transfer(self):
+    #     self.show_transfer()
+    #     input_login = self.login.text()
+    #     amount = self.amount.text()
+    #     cursor = self.db.connect.cursor()
+    #     cursor.execute(f"SELECT login FROM users WHERE login = '{input_login}';")
+    #     result = cursor.fetchall()
+    #     if result != []:
+    #         cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+    #         print(cursor.fetchall())
+            # users_balance = cursor1.fetchall()[0][0]
+            # print(users_balance)
+            # if users_balance >= int(amount):
+            #     print("OK")
 
 class Bank(QMainWindow):
     def __init__(self):

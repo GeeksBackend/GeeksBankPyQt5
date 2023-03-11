@@ -155,6 +155,85 @@ border-radius: 10px;</string>
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QLineEdit" name="login">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>270</y>
+     <width>341</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="placeholderText">
+    <string>Логин</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="amount">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>340</y>
+     <width>341</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 17pt &quot;Yu Gothic UI Semibold&quot;;
+color: white;
+background-color: red;
+border-radius: 10px;</string>
+   </property>
+   <property name="placeholderText">
+    <string>Сумма</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="send">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>410</y>
+     <width>151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Yu Gothic UI Semibold&quot;;
+color: red;
+background-color: white;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>Отправить</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="result">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>210</y>
+     <width>341</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 14pt &quot;Yu Gothic UI Semibold&quot;;
+color: red;
+background-color: white;
+border-radius: 10px;</string>
+   </property>
+   <property name="text">
+    <string>Логин не рабочий</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
