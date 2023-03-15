@@ -58,32 +58,31 @@ class Personal(QWidget):
         loadUi('personal.ui', self)     
         self.username.setText(login)
         self.db = StartDB()
-        cursor = self.db.connect.cursor()
-        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
+        self.class_cursor = self.db.connect.cursor()
+        result = self.class_cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         self.balance.setText(f"{result.fetchall()[0][0]} KGS")
         self.make.clicked.connect(self.make_money)
-        # self.hide_transfer()
-        # self.transfer.clicked.connect(self.user_transfer)
-        # self.send.clicked.connect(self.user_transfer)
-        cursor.connection.commit()
+        self.hide_transfer()
+        self.transfer.clicked.connect(self.user_transfer)
+        self.send.clicked.connect(self.user_transfer)
+        self.class_cursor.connection.commit()
 
-    # def hide_transfer(self):
-    #     self.result.hide()
-    #     self.login.hide()
-    #     self.amount.hide()
-    #     self.send.hide()
+    def hide_transfer(self):
+        self.result.hide()
+        self.input_login.hide()
+        self.amount.hide()
+        self.send.hide()
 
-    # def show_transfer(self):
-    #     self.result.show()
-    #     self.login.show()
-    #     self.amount.show()
-    #     self.send.show()
+    def show_transfer(self):
+        self.result.show()
+        self.input_login.show()
+        self.amount.show()
+        self.send.show()
 
     def update_balance(self):
         cursor = self.db.connect.cursor()
-        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';").fetchall()
-        # self.balance.setText(f"{result.fetchall()[0][0]} KGS")
-        print(result)
+        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+        self.balance.setText(f"{result.fetchall()[0][0]} KGS")
     
     def make_money(self):
         cursor = self.db.connect.cursor()
@@ -91,20 +90,31 @@ class Personal(QWidget):
         self.db.connect.commit()
         self.update_balance()
 
-    # def user_transfer(self):
-    #     self.show_transfer()
-    #     input_login = self.login.text()
-    #     amount = self.amount.text()
-    #     cursor = self.db.connect.cursor()
-    #     cursor.execute(f"SELECT login FROM users WHERE login = '{input_login}';")
-    #     result = cursor.fetchall()
-    #     if result != []:
-    #         cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
-    #         print(cursor.fetchall())
-            # users_balance = cursor1.fetchall()[0][0]
-            # print(users_balance)
-            # if users_balance >= int(amount):
-            #     print("OK")
+    def user_transfer(self):
+        self.show_transfer()
+        input_login = self.input_login.text()
+        amount = self.amount.text()
+        cursor = self.db.connect.cursor()
+        cursor.execute(f"SELECT login FROM users WHERE login = '{input_login}';")
+        result = cursor.fetchall()
+        self.result.hide() #new
+        if result != []:
+            cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+            users_balance = cursor.fetchall()[0][0]
+            print(users_balance)
+            if users_balance >= int(amount):
+                cursor.execute(f"UPDATE users SET balance = balance - {amount} WHERE login = '{self.login}';")
+                cursor.execute(f"UPDATE users SET balance = balance + {amount} WHERE login = '{input_login}';")
+                cursor.connection.commit()
+                self.update_balance()
+                self.result.show() #new
+                self.result.setText("Успешно")
+            else:
+                self.result.show() #new
+                self.result.setText("Недостаточно денег")
+        elif result == [] and input_login and amount: #new
+            self.result.show() #new
+            self.result.setText("Такого пользователя не существует")
 
 class Bank(QMainWindow):
     def __init__(self):
