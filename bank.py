@@ -16,6 +16,18 @@ class StartDB:
             balance INT
             );
         """)
+        self.connect.execute("""
+            CREATE TABLE IF NOT EXISTS payments(
+                light_amount INT,
+                water_amount INT,
+                sewage_amount INT, 
+                garbage_amout INT, 
+                gas_amount INT
+            );
+        """)
+        self.connect.execute("""
+            INSERT INTO payments VALUES (0, 0, 0, 0, 0);
+        """)
         self.connect.commit()
 
 class SignUp(QWidget):
@@ -52,6 +64,55 @@ class SignUp(QWidget):
                 self.error.setText("Логин занят.")
         self.db.connect.commit()
 
+class Payments(QWidget):
+    def __init__(self, login):
+        super(Payments, self).__init__()
+        self.login = login 
+        loadUi('payments.ui', self)
+        self.username.setText(self.login)
+        self.db = StartDB()
+        self.class_cursor = self.db.connect.cursor()
+        result = self.class_cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+        self.balance.setText(f"{result.fetchall()[0][0]} KGS")
+        self.hide_transfer()
+        self.light.clicked.connect(self.light_payment_transfer)
+        self.send.clicked.connect(self.light_payment_transfer)
+
+    def hide_transfer(self):
+        self.result.hide()
+        self.amount.hide()
+        self.send.hide()
+
+    def show_transfer(self):
+        self.result.show()
+        self.amount.show()
+        self.send.show()
+
+    def update_balance(self):
+        cursor = self.db.connect.cursor()
+        result = cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+        self.balance.setText(f"{result.fetchall()[0][0]} KGS")
+
+    def main_payment_transfer(self, amount, column):
+        cursor = self.db.connect.cursor()
+        cursor.execute(f"UPDATE users SET balance = balance - {amount} WHERE login = '{self.login}';")
+        cursor.execute(f"UPDATE payments SET {column} = {column} + {amount};")
+        cursor.connection.commit()
+        self.update_balance()
+
+    def light_payment_transfer(self):
+        self.show_transfer()
+        amount = self.amount.text()
+        cursor = self.db.connect.cursor()
+        cursor.execute(f"SELECT balance FROM users WHERE login = '{self.login}';")
+        users_balance = cursor.fetchall()[0][0]
+        if amount and users_balance >= int(amount):
+            print("Ok")
+            self.main_payment_transfer(amount, 'light_amount')
+        elif amount and users_balance <= int(amount):
+            print("no")
+
+
 class Personal(QWidget):
     def __init__(self, login):
         super(Personal, self).__init__()
@@ -59,6 +120,7 @@ class Personal(QWidget):
         loadUi('personal.ui', self)     
         self.username.setText(login)
         self.db = StartDB()
+        self.payments_class = Payments(login)
         self.class_cursor = self.db.connect.cursor()
         result = self.class_cursor.execute(f"SELECT balance FROM users WHERE login = '{login}';")
         self.balance.setText(f"{result.fetchall()[0][0]} KGS")
@@ -67,6 +129,10 @@ class Personal(QWidget):
         self.transfer.clicked.connect(self.user_transfer)
         self.send.clicked.connect(self.user_transfer)
         self.class_cursor.connection.commit()
+        self.payments.clicked.connect(self.show_payments)
+
+    def show_payments(self):
+        self.payments_class.show()
 
     def hide_transfer(self):
         self.result.hide()
